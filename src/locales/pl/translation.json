@@ -1,0 +1,13 @@
+{
+  "footer": {
+    "contact": "Kontakt"
+  },
+  "lang": {
+    "pl": "Polski",
+    "en": "Angielski"
+  },
+  "google": {
+    "signIn": "Zaloguj się poprzez Google",
+    "signOut": "Wyloguj się"
+  }
+}

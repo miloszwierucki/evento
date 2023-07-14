@@ -1,0 +1,26 @@
+{
+  "footer": {
+    "contact": "Kontakt"
+  },
+  "lang": {
+    "pl": "Polski",
+    "en": "Angielski"
+  },
+  "google": {
+    "signIn": "Zaloguj się poprzez Google",
+    "signOut": "Wyloguj się"
+  },
+  "nav": {
+    "add-event": "Dodaj wydarzenie",
+    "view-events": "Zobacz wydarzenia",
+    "settings": "Ustawienia"
+  },
+  "add-event": {
+    "title": "Tworzenie spotkania...",
+    "message": "Trwa tworzenie wydarzenia w Kalendarzu Google, poczekaj chwilę",
+    "successTitle": "Wydarzenie utworzone",
+    "successMessage": "Pomyślnie utworzono wydarzenie, sprawdź swój Kalendarz Google!",
+    "errTitle": "Wydarzenie nie zostało utworzone",
+    "errMessage": "Nie udało się utworzyć wydarzenia, spróbuj ponownie 😕"
+  }
+}

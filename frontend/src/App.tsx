@@ -13,7 +13,7 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { AddEvent } from "./pages/AddEvent/AddEvent";
+import { AddEventPage } from "./pages/AddEventPage/AddEventPage";
 import AppShellLayout from "./pages/AppShellLayout";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/add-event",
-            element: <AddEvent />,
+            element: <AddEventPage />,
           },
           {
             path: "/view-events",

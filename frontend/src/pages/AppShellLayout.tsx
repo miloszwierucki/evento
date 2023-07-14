@@ -20,9 +20,9 @@ function AppShellLayout() {
         session ? (
           <Navbar
             hidden={!openedNav}
-            p="md"
             hiddenBreakpoint="sm"
-            width={{ sm: 240 }}
+            width={{ sm: 280 }}
+            p="xs"
           >
             <NavLinks />
           </Navbar>
@@ -31,7 +31,7 @@ function AppShellLayout() {
         )
       }
     >
-      <Center sx={{ width: "100%", height: "80%" }}>
+      <Center sx={{ width: "100%", minHeight: "80%" }}>
         <Outlet />
       </Center>
     </AppShell>

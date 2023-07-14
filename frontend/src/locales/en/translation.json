@@ -1,0 +1,26 @@
+{
+  "footer": {
+    "contact": "Contact"
+  },
+  "lang": {
+    "pl": "Polish",
+    "en": "English"
+  },
+  "google": {
+    "signIn": "Sign In with Google",
+    "signOut": "Sign Out"
+  },
+  "nav": {
+    "add-event": "Add event",
+    "view-events": "View events",
+    "settings": "Settings"
+  },
+  "add-event": {
+    "title": "Creating an event...",
+    "message": "Google Calendar event is being created, please wait a moment",
+    "successTitle": "Event created",
+    "successMessage": "Event successfully created, check your Google Calendar!",
+    "errTitle": "Event not created",
+    "errMessage": "Failed to create event, please try again 😕"
+  }
+}

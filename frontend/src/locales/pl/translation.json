@@ -21,6 +21,29 @@
     "successTitle": "Wydarzenie utworzone",
     "successMessage": "Pomyślnie utworzono wydarzenie, sprawdź swój Kalendarz Google!",
     "errTitle": "Wydarzenie nie zostało utworzone",
-    "errMessage": "Nie udało się utworzyć wydarzenia, spróbuj ponownie 😕"
+    "errMessage": "Nie udało się utworzyć wydarzenia, spróbuj ponownie 😕",
+    "startTime": "Data rozpoczęcia wydarzenia",
+    "placeholderTime": "Wybierz datę i godzinę",
+    "durationTime": "Czas trwania",
+    "description": "Opis wydarzenia",
+    "submitButton": "Wstaw wydarzenie"
+  },
+  "view-events": {
+    "title": "Wydarzenia",
+    "showButton": "Pokaż więcej",
+    "hideButton": "Ukryj"
+  },
+  "settings": {
+    "guide": "Tutaj możesz skonfigurować właściwości nowoutworzonych wydarzenia, takie jak tytuł czy adress email (gościa)",
+    "guideMore": "W tytule możesz skorzystać z gotowych elementów: ",
+    "titleInput": "Tytuł wydarzenia",
+    "emailInput": "Adress email (gościa)",
+    "submitButton": "Zapisz ustawienia",
+    "title": "Zapisywanie ustawień...",
+    "message": "Trwa zapisywanie nowych ustawień, poczekaj chwilę",
+    "successTitle": "Zapisano ustawienia",
+    "successMessage": "Nowe ustawienia zostały pomyślnie zapisane!",
+    "errTitle": "Nie zapisano ustawień",
+    "errMessage": "Nie udało się zapisać nowych ustawień, spróbuj ponownie 😕"
   }
 }

@@ -13,12 +13,14 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { AddEventPage } from "./pages/AddEventPage/AddEventPage";
 import AppShellLayout from "./pages/AppShellLayout";
-import { LoginPage } from "./pages/LoginPage/LoginPage";
-import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { Auth } from "./pages/Auth";
+import { LoginPage } from "./pages/LoginPage/LoginPage";
+import { AddEventPage } from "./pages/AddEventPage/AddEventPage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import { ViewEventsPage } from "./pages/ViewEventsPage/ViewEventsPage";
+import { SettingsPage } from "./pages/SettingsPage/SettingsPage";
+import { isAdmin } from "./config/supabase-client";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,10 @@ const router = createBrowserRouter([
           {
             path: "/view-events",
             element: <ViewEventsPage />,
+          },
+          {
+            path: isAdmin ? "/settings" : "/",
+            element: <SettingsPage />,
           },
         ],
       },

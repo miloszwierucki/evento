@@ -1,56 +1,76 @@
-import { Stack, Space, Button, TextInput, Textarea } from "@mantine/core";
+import {
+  Stack,
+  Button,
+  Textarea,
+  SegmentedControl,
+  Center,
+  px,
+  Text,
+} from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { addCalendarEvent } from "../../eventFunction/addCalendarEvent";
 import { useSession } from "@supabase/auth-helpers-react";
+import { useTranslation } from "react-i18next";
 
 export const AddEventPage = () => {
   const session = useSession();
-  const creatorEmail = session?.user.email as string;
-
+  const { t } = useTranslation();
   const form = useForm({
     initialValues: {
-      nameEvent: "",
       descEvent: "",
+      duration: "30",
       startEvent: null,
     },
 
     validate: {
-      nameEvent: (value) =>
-        value.length < 5 ? "Event name must have at least 5 letters" : null,
       startEvent: (value: Date) => (value < new Date() ? "Invalid date" : null),
     },
   });
 
   return (
-    <form
-      onSubmit={form.onSubmit((values) =>
-        addCalendarEvent({ creatorEmail, ...values })
-      )}
-      style={{ width: "80%" }}
-    >
-      <Stack spacing="md" h={300}>
-        <TextInput
-          placeholder="..."
-          label="Event name"
-          withAsterisk
-          {...form.getInputProps("nameEvent")}
-        />
-        <DateTimePicker
-          clearable
-          label="Start of your event"
-          placeholder="Pick date and time"
-          withAsterisk
-          {...form.getInputProps("startEvent")}
-        />
-        <Textarea
-          placeholder="..."
-          label="Event description"
-          {...form.getInputProps("descEvent")}
-        />
-        <Space h="lg" />
-        <Button type="submit">Create event</Button>
-      </Stack>
-    </form>
+    <Center sx={{ width: "100%", height: "80%" }}>
+      <form
+        onSubmit={form.onSubmit(
+          (values) => session && addCalendarEvent({ session, ...values })
+        )}
+        style={{ width: "75%" }}
+      >
+        <Stack spacing="lg">
+          <DateTimePicker
+            clearable
+            label={t("add-event.startTime")}
+            placeholder={t("add-event.placeholderTime")}
+            withAsterisk
+            {...form.getInputProps("startEvent")}
+          />
+          <div>
+            <Text size="sm" weight="500">
+              {t("add-event.durationTime")}
+            </Text>
+            <SegmentedControl
+              w="100%"
+              radius="sm"
+              data={[
+                { label: "20 min", value: "20" },
+                { label: "30 min", value: "30" },
+                { label: "45 min", value: "45" },
+                { label: "60 min", value: "60" },
+              ]}
+              {...form.getInputProps("duration")}
+            />
+          </div>
+          <Textarea
+            placeholder="..."
+            label={t("add-event.description")}
+            {...form.getInputProps("descEvent")}
+            mb={px("1rem")}
+          />
+          <Button type="submit" w="40%" mx="auto" variant="light" size="md">
+            {t("add-event.submitButton")}
+          </Button>
+        </Stack>
+      </form>
+    </Center>
   );
 };

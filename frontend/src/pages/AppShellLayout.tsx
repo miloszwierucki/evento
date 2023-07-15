@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AppShell, Center, Navbar } from "@mantine/core";
+import { AppShell, Navbar } from "@mantine/core";
 import { CustomHeader } from "../components/Header/CustomHeader";
 import { CustomFooter } from "../components/Footer/CustomFooter";
 import { Outlet } from "react-router-dom";
@@ -31,9 +31,7 @@ function AppShellLayout() {
         )
       }
     >
-      <Center sx={{ width: "100%", minHeight: "80%" }}>
-        <Outlet />
-      </Center>
+      <Outlet />
     </AppShell>
   );
 }

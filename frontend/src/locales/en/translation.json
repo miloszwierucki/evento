@@ -21,6 +21,30 @@
     "successTitle": "Event created",
     "successMessage": "Event successfully created, check your Google Calendar!",
     "errTitle": "Event not created",
-    "errMessage": "Failed to create event, please try again 😕"
+    "errMessage": "Failed to create event, please try again 😕",
+    "startTime": "Start of your event",
+    "placeholderTime": "Pick date and time",
+    "durationTime": "Event duration",
+    "description": "Event description",
+    "submitButton": "Insert event"
+
+  },
+  "view-events": {
+    "title": "Events",
+    "showButton": "Show more",
+    "hideButton": "Hide"
+  },
+  "settings": {
+    "guide": "Here you can configure the properties of newly created events, such as title or (guest) email address",
+    "guideMore": "You can use ready-made elements in the title: ",
+    "titleInput": "Event title",
+    "emailInput": "(guest) Email address",
+    "submitButton": "Save settings",
+    "title": "Saving Settings...",
+    "message": "Saving new settings, please wait a moment",
+    "successTitle": "Settings Saved",
+    "successMessage": "New settings successfully saved!",
+    "errTitle": "Settings not saved",
+    "errMessage": "Failed to save new settings, please try again 😕"
   }
 }

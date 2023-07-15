@@ -1,48 +1,116 @@
 import Fastify from "fastify";
-// import cors from "@fastify/cors";
 import { google } from "googleapis";
 import "dotenv/config";
+import fastifyStatic from "@fastify/static";
+import * as path from "path";
+import { fileURLToPath } from "url";
+// Configuring the path to a root folder
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// Configuration and authorization
 const fastify = Fastify({ logger: true });
-// await fastify.register(cors, { origin: true });
-const CREDENTIALS = JSON.parse(process.env.CREDENTIALS);
-const calendarId = process.env.CALENDAR_ID;
-const calendar = google.calendar({ version: "v3" });
-let token;
-// Auth google service account
-const googleJWTClient = new google.auth.JWT(CREDENTIALS.client_email, "", CREDENTIALS.private_key, ["https://www.googleapis.com/auth/calendar"], // You may need to specify scopes other than analytics
-"");
-googleJWTClient.authorize((error, access_token) => {
-    if (error) {
-        return console.error("Couldn't get access token", error);
-    }
-    token = access_token?.access_token;
+const OAuth2 = google.auth.OAuth2;
+const oauth2Client = new OAuth2(process.env.CLIENT_ID, process.env.SECRET_KEY);
+const calendar = google.calendar({
+    version: "v3",
 });
-fastify.get("/cos", async (request, reply) => {
-    reply.send("Placki1");
+// Static website
+fastify.register(fastifyStatic, {
+    root: path.join(__dirname, "dist"),
 });
-fastify.get("/users", async (request, reply) => {
-    reply.send([{ id: 1, name: "Wacek" }]);
-});
-// get list event from calendar
-fastify.get("/events", async (request, reply) => {
-    try {
-        const response = await fetch("https://www.googleapis.com/calendar/v3/calendars/dbae957512da60cdf153a68682e64c2224b31a33bddd3ff9b6c12456a7ca92c3@group.calendar.google.com/events", {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token,
+// Insert event in Google calendar
+const postEventOpts = {
+    schema: {
+        body: {
+            type: "object",
+            properties: {
+                accessToken: { type: "string" },
+                name: { type: "string" },
+                surname: { type: "string" },
+                description: { type: "string" },
+                startTime: { type: "string" },
+                duration: { type: "number" },
             },
-        });
-        if (!response.ok) {
-            throw new Error("Bad response");
-        }
-        const json = await response.json();
-        reply.send(json);
-    }
-    catch (err) {
-        console.log("Kurwa błąd", err);
-    }
+            required: [
+                "accessToken",
+                "name",
+                "surname",
+                "description",
+                "startTime",
+                "duration",
+            ],
+        },
+    },
+};
+fastify.post("/insert-event/:uuid", postEventOpts, async (request, reply) => {
+    const { accessToken, name, surname, description, startTime, duration } = request.body;
+    oauth2Client.setCredentials({
+        access_token: accessToken,
+    });
+    const startEvent = new Date(startTime);
+    const endEvent = new Date(startTime);
+    endEvent.setMinutes(endEvent.getMinutes() + duration);
+    calendar.events.insert({
+        calendarId: "primary",
+        sendUpdates: "all",
+        auth: oauth2Client,
+        requestBody: {
+            summary: "Konsultacja | " + name + " " + surname,
+            description: description + "\n\n#consultation",
+            locked: true,
+            start: {
+                dateTime: startEvent.toISOString(),
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            },
+            end: {
+                dateTime: endEvent.toISOString(),
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            },
+            attendees: [{ email: "mily.deuce@gmail.com" }],
+            reminders: {
+                useDefault: false,
+                overrides: [
+                    { method: "email", minutes: 24 * 60 },
+                    { method: "popup", minutes: 10 },
+                ],
+            },
+        },
+    }, (err) => {
+        fastify.log.error(err);
+    });
 });
-fastify.listen({ port: 3000 }, (err, address) => {
+// Get events from Google calendar
+const getEventsOpts = {
+    schema: {
+        body: {
+            type: "object",
+            properties: {
+                accessToken: { type: "string" },
+            },
+            required: ["accessToken"],
+        },
+    },
+};
+fastify.put("/list-events/:uuid", (request, reply) => {
+    const { accessToken } = request.body;
+    oauth2Client.setCredentials({
+        access_token: accessToken,
+    });
+    calendar.events.list({
+        calendarId: "primary",
+        auth: oauth2Client,
+    }, (err, result) => {
+        if (err) {
+            fastify.log.error(err);
+        }
+        else {
+            const events = result?.data.items?.filter((e) => e.description?.includes("#consultation"));
+            reply.send(events);
+        }
+    });
+});
+// Listen port 3000
+fastify.listen({ port: parseInt(process.env.PORT) || 3000 }, (err, address) => {
     if (err) {
         console.error(err);
         process.exit(1);

@@ -1,36 +1,101 @@
-import { Avatar, Box, Card, Group, Image, Text } from "@mantine/core";
-import { IEventCard } from "./EventCard.types";
-import { useSession } from "@supabase/auth-helpers-react";
+import {
+  Box,
+  Card,
+  Divider,
+  Group,
+  Spoiler,
+  Text,
+  ThemeIcon,
+  px,
+  useMantineTheme,
+} from "@mantine/core";
+import { IEventCard, IStatusColor } from "./EventCard.types";
+import { useTranslation } from "react-i18next";
+import { IconQuestionMark, IconCheck, IconX } from "@tabler/icons-react";
 
-export function EventCard({ summary }: IEventCard) {
-  const session = useSession();
+// Status color
+const statusColor: IStatusColor = {
+  needsAction: { color: "gray", icon: <IconQuestionMark /> },
+  declined: { color: "red", icon: <IconX /> },
+  tentative: { color: "lime", icon: <IconQuestionMark /> },
+  accepted: { color: "green", icon: <IconCheck /> },
+};
+
+export function EventCard({
+  summary,
+  creatorEmail,
+  startTime,
+  endTime,
+  description,
+  link,
+  status,
+  bgColor,
+}: IEventCard) {
+  const { t } = useTranslation();
+  const theme = useMantineTheme();
+
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+
+  const state =
+    (status && status.reduce((acc: any, cur: any) => cur.responseStatus, "")) ||
+    "needsAction";
 
   return (
     <Card
-      w={"30%"}
       shadow="md"
-      padding="xl"
-      component="a"
-      href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-      target="_blank"
+      padding="lg"
+      bg={
+        theme.colorScheme === "light"
+          ? theme.fn.rgba(theme.colors[bgColor][1], 1)
+          : theme.fn.rgba(theme.colors[bgColor][6], 0.4)
+      }
     >
-      <Text weight={500} size="lg" mt="md">
-        {`${summary}`}
-      </Text>
       <Group>
-        <Avatar src={session?.user.user_metadata.avatar_url} radius="xl" />
+        <ThemeIcon
+          radius="md"
+          size="lg"
+          color={theme.fn.rgba(theme.colors[statusColor[state].color][4], 0.8)}
+        >
+          {statusColor[state].icon}
+        </ThemeIcon>
         <Box sx={{ flex: 1, overflow: "hidden" }}>
-          <Text size="sm" weight={500}>
-            {session?.user.user_metadata.full_name}
+          <Text
+            weight="600"
+            size="xl"
+            component="a"
+            href={link}
+            target="_blank"
+          >
+            {`${summary}`}
           </Text>
-          <Text color="dimmed" size="xs">
-            {session?.user.email}
+          <Text size="sm" mt={-2} mb={2}>
+            {String(start.toLocaleTimeString().substring(0, 5)) +
+              "-" +
+              String(end.toLocaleTimeString().substring(0, 5)) +
+              " | " +
+              String(start.toLocaleDateString())}
           </Text>
         </Box>
       </Group>
-      <Text mt="xs" color="dimmed" size="sm">
-        Please click anywhere on this card to claim your reward, this is not a
-        fraud, trust us
+
+      <Divider variant="dashed" my="sm" />
+
+      <Spoiler
+        maxHeight={px("3rem")}
+        showLabel={t("view-events.showButton")}
+        hideLabel={t("view-events.hideButton")}
+      >
+        {description}
+      </Spoiler>
+      <Text
+        size="xs"
+        color="dimmed"
+        align="end"
+        mb={px("-0.75rem")}
+        mt={px("0.5rem")}
+      >
+        {creatorEmail}
       </Text>
     </Card>
   );

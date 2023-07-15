@@ -10,10 +10,15 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useSession } from "@supabase/auth-helpers-react";
-import { IconTimelineEvent, IconSwipe } from "@tabler/icons-react";
+import {
+  IconTimelineEvent,
+  IconSwipe,
+  IconSettings,
+} from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import { MainLinkProps } from "./NavLinks.types";
 import { useTranslation } from "react-i18next";
+import { isAdmin } from "./../../config/supabase-client";
 
 function MainLink({ icon, color, label, to }: MainLinkProps) {
   const { t } = useTranslation();
@@ -34,20 +39,27 @@ function MainLink({ icon, color, label, to }: MainLinkProps) {
   );
 }
 
-const data = [
+const data: MainLinkProps[] = [
   {
     icon: <IconTimelineEvent size="1rem" />,
     color: "blue",
     label: "add-event",
     to: "/add-event",
-    admin: false,
   },
   {
     icon: <IconSwipe size="1rem" />,
     color: "violet",
     label: "view-events",
     to: "/view-events",
-    admin: false,
+  },
+];
+
+const adminData: MainLinkProps[] = [
+  {
+    icon: <IconSettings size="1rem" />,
+    color: "gray",
+    label: "settings",
+    to: "/settings",
   },
 ];
 
@@ -58,11 +70,11 @@ export function NavLinks() {
   return (
     <>
       <Navbar.Section grow mt="xs">
-        {data
-          .filter((link) => link.admin === false)
-          .map((link) => (
-            <MainLink {...link} key={link.label} />
-          ))}
+        {data.map((link) => (
+          <MainLink {...link} key={link.label} />
+        ))}
+        {isAdmin &&
+          adminData.map((link) => <MainLink {...link} key={link.label} />)}
       </Navbar.Section>
       <Navbar.Section
         sx={{

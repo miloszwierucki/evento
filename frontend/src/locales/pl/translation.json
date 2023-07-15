@@ -26,7 +26,8 @@
     "placeholderTime": "Wybierz datę i godzinę",
     "durationTime": "Czas trwania",
     "description": "Opis wydarzenia",
-    "submitButton": "Wstaw wydarzenie"
+    "submitButton": "Wstaw wydarzenie",
+    "formDateErr": "Nieprawidłowa data"
   },
   "view-events": {
     "title": "Wydarzenia",
@@ -44,6 +45,8 @@
     "successTitle": "Zapisano ustawienia",
     "successMessage": "Nowe ustawienia zostały pomyślnie zapisane!",
     "errTitle": "Nie zapisano ustawień",
-    "errMessage": "Nie udało się zapisać nowych ustawień, spróbuj ponownie 😕"
+    "errMessage": "Nie udało się zapisać nowych ustawień, spróbuj ponownie 😕",
+    "formTitleErr": "Tytuł powinien mieć więcej niż 5 znaków",
+    "formEmailErr": "Niepoprawny adres email"
   }
 }

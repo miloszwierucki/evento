@@ -26,7 +26,8 @@
     "placeholderTime": "Pick date and time",
     "durationTime": "Event duration",
     "description": "Event description",
-    "submitButton": "Insert event"
+    "submitButton": "Insert event",
+    "formDateErr": "Invalid date"
 
   },
   "view-events": {
@@ -45,6 +46,8 @@
     "successTitle": "Settings Saved",
     "successMessage": "New settings successfully saved!",
     "errTitle": "Settings not saved",
-    "errMessage": "Failed to save new settings, please try again 😕"
+    "errMessage": "Failed to save new settings, please try again 😕",
+    "formTitleErr": "Title should be more than 5 characters",
+    "formEmailErr": "Invalid email"
   }
 }

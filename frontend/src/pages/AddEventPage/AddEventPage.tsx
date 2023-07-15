@@ -24,7 +24,8 @@ export const AddEventPage = () => {
     },
 
     validate: {
-      startEvent: (value: Date) => (value < new Date() ? "Invalid date" : null),
+      startEvent: (value: Date) =>
+        value < new Date() ? `${t("add-event.formDateErr")}` : null,
     },
   });
 

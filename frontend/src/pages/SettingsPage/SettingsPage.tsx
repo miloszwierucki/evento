@@ -11,8 +11,10 @@ import { IconMail } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
 import { useTranslation } from "react-i18next";
 import { isAdmin, supabase } from "../../config/supabase-client";
-import { showNotification } from "@mantine/notifications";
+import { showNotification } from "../../components/Notifications/showNotification";
 import { INotification } from "../../components/Notifications/Notification.types";
+
+const { data: settings } = await supabase.from("settings").select("*").single();
 
 const notiProps: INotification = {
   title: "settings.title",
@@ -29,12 +31,14 @@ export const SettingsPage = () => {
   const form = useForm({
     initialValues: {
       title: "",
-      email: "",
+      email: settings.email,
     },
 
     validate: {
-      title: (value) => (value.length <= 2 ? "Invalid date" : null),
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      title: (value) =>
+        value.length <= 5 ? `${t("settings.formTitleErr")}` : null,
+      email: (value) =>
+        /^\S+@\S+$/.test(value) ? null : `${t("settings.formEmailErr")}`,
     },
   });
 

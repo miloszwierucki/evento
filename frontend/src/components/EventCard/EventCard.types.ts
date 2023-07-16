@@ -5,7 +5,7 @@ export interface IEventCard {
   endTime: string;
   description: string;
   link: string;
-  status?: any;
+  status?: { responseStatus: string }[];
   bgColor: string;
 }
 

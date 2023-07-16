@@ -10,11 +10,9 @@ import {
 import { IconMail } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
 import { useTranslation } from "react-i18next";
-import { isAdmin, supabase } from "../../config/supabase-client";
+import { isAdmin, settings, supabase } from "../../config/supabase-client";
 import { showNotification } from "../../components/Notifications/showNotification";
 import { INotification } from "../../components/Notifications/Notification.types";
-
-const { data: settings } = await supabase.from("settings").select("*").single();
 
 const notiProps: INotification = {
   title: "settings.title",

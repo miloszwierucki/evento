@@ -38,7 +38,7 @@ export function EventCard({
   const end = new Date(endTime);
 
   const state =
-    (status && status.reduce((acc: any, cur: any) => cur.responseStatus, "")) ||
+    (status && status.reduce((_acc, cur) => cur.responseStatus, "")) ||
     "needsAction";
 
   return (

@@ -9,5 +9,8 @@ export default defineConfig({
       "/list-events": "http://localhost:3000",
     },
   },
+  build: {
+    target: "esnext",
+  },
   plugins: [react()],
 });

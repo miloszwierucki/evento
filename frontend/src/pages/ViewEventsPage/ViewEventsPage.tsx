@@ -6,9 +6,7 @@ import { useSession } from "@supabase/auth-helpers-react";
 import { getCalendarEvents } from "../../eventFunction/getCalendarEvents";
 import { useTranslation } from "react-i18next";
 import Masonry from "react-masonry-css";
-import { supabase } from "../../config/supabase-client";
-
-const { data: settings } = await supabase.from("settings").select("*").single();
+import { settings } from "../../config/supabase-client";
 
 export const ViewEventsPage = () => {
   const [events, setEvents] = useState<IEvents[]>([]);
